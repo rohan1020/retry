@@ -20,6 +20,10 @@ func init() {
 // in case an error is returned from the first argument fuction.
 func Do(args ...interface{}) error {
 
+	if len(args) == 0 {
+		panic("Wrong number of arguments")
+	}
+
 	task, ok := args[0].(func() error)
 
 	beforeRetry := func() {}
