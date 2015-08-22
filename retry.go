@@ -8,10 +8,12 @@ import (
 
 var Delay time.Duration
 var NumRetries int
+var PanicEnabled bool
 
 func init() {
 	Delay = 2 * time.Second
 	NumRetries = 15
+	PanicEnabled = false
 }
 
 // Do accepts a function argument that returns an error. It will keep executing this
@@ -58,6 +60,9 @@ func Do(args ...interface{}) error {
 	if err != nil {
 
 		color.Red("\nError even after %d retries:\n%v", NumRetries, err)
+		if PanicEnabled == true {
+			panic(err)
+		}
 		return err
 	}
 
